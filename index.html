@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Uploader</title>
+</head>
+<body>
+    {{ if .IsAuthenticated }}
+    <div>
+        <form method="post" enctype="multipart/form-data" action="/">
+            <input type="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+        <h2>Uploaded Files</h2>
+        <ul>
+            {{ range .Files }}
+            <li>
+                <a href="/download/{{ . }}">{{ . }}</a>
+                <form method="post" action="/delete/{{ . }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+            {{ end }}
+        </ul>
+        <form method="post" action="/logout">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    {{ else }}
+    <div>
+        <form method="post" action="/login">
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    {{ end }}
+</body>
+</html>
